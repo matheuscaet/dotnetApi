@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using dotnetApi.Models;
 using Microsoft.Extensions.Options;
+using dotnetApi.Services;
 
 namespace dotnetApi
 {
@@ -27,12 +28,10 @@ namespace dotnetApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // requires using Microsoft.Extensions.Options
-            services.Configure<ItemsDatabaseSettings>(
-                Configuration.GetSection(nameof(ItemsDatabaseSettings)));
+            
+            services.AddSingleton(Configuration);
 
-            services.AddSingleton<ItemsDatabaseSettings>(sp =>
-                sp.GetRequiredService<IOptions<ItemsDatabaseSettings>>().Value);
+            services.AddSingleton<ItemsService>();
 
             services.AddControllers();
         }
