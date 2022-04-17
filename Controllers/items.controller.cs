@@ -38,7 +38,7 @@ namespace dotnetApi.Controllers
         {
             this._itemService.Create(item);
 
-            return CreatedAtRoute("GetItem", new { id = item.Id.ToString() }, item);
+            return CreatedAtRoute("GetItem", new { id = item._id.ToString() }, item);
         }
 
         [HttpPut("{id:length(24)}")]
@@ -50,10 +50,10 @@ namespace dotnetApi.Controllers
             {
                 return NotFound();
             }
-
+            itemIn._id = id;
             this._itemService.Update(id, itemIn);
 
-            return NoContent();
+            return Ok(itemIn);
         }
 
         [HttpDelete("{id:length(24)}")]
